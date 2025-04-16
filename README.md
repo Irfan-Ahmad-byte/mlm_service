@@ -87,14 +87,14 @@ RANKS = [
 
 | Method | Route | Description |
 |--------|-------|-------------|
-| `POST` | `/mlm/register` | Add user to MLM tree |
-| `GET`  | `/mlm/downline/{user_id}` | Get user’s direct downlines |
-| `POST` | `/mlm/bonus` | Trigger bonus distribution |
-| `GET`  | `/mlm/bonus/user/{user_id}` | Get user bonus history |
-| `GET`  | `/mlm/bonus?status=pending` | Admin: list bonuses |
-| `PATCH`| `/mlm/bonus/{id}/mark-paid` | Admin: mark bonus paid |
-| `POST` | `/mlm/rank/evaluate/{user_id}` | Evaluate and assign rank |
-| `GET`  | `/mlm/report/weekly/{user_id}` | Weekly report of earnings |
+| `POST` | `/user/register` | Add user to MLM tree |
+| `GET`  | `/user/downline/{user_id}` | Get user’s direct downlines |
+| `POST` | `/bonus/bonus` | Trigger bonus distribution |
+| `GET`  | `/bonus/bonus/user/{user_id}` | Get user bonus history |
+| `GET`  | `/bonus/bonus?status=pending` | Admin: list bonuses |
+| `PATCH`| `/bonus/bonus/{id}/mark-paid` | Admin: mark bonus paid |
+| `POST` | `/ranks/evaluate/{user_id}` | Evaluate and assign rank |
+| `GET`  | `/reports/weekly/{user_id}` | Weekly report of earnings |
 
 ---
 
