@@ -1,0 +1,67 @@
+services:
+  web:
+    build: .
+    container_name: mlm_app
+    ports:
+      - "11000:11000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5433/mlm
+    volumes:
+      - .:/app
+    depends_on:
+      db:
+        condition: service_healthy
+      mlm_redis:
+        condition: service_healthy
+    env_file:
+      - ./app/configs/.env
+    networks:
+      - mlm_network
+      - shared_network
+
+  db:
+    image: postgres:17.4
+    container_name: mlm_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: mlm
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      timeout: 30s
+      retries: 5
+    env_file:
+      - ./app/configs/.env
+    networks:
+      - mlm_network
+
+  mlm_redis:
+    image: redis:7.4.2
+    ports:
+      - "6380:6379"
+    volumes:
+      - "./healthchecks:/healthchecks"
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - mlm_network
+    env_file:
+      - ./app/configs/.env
+
+volumes:
+  pgdata:
+
+networks:
+  mlm_network:
+    driver: bridge
+  shared_network:
+    external: true
+    name: shared_network
