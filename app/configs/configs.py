@@ -18,16 +18,15 @@ class Configs(BaseSettings):
     DB_PASSWORD: str
     REDIS_ENABLED: bool = True
     REDIS_URL: str = "redis://localhost:6379/0"
-    SECRET_KEY: str = "secret_key"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
-    REFRESH_TOKEN_EXPIRE_MINUTES: int = 30
     IS_REDIS_RUNNING: bool = False
     MAX_CHILDREN: int = 5
 
     # Other configurations can be added here
 
     # Example: API keys, secret keys, etc.
-    class Config:
-        env_file = ".env"
+    model_config = {
+        "extra": "allow",  # Or use "allow" if you want to access them via self.__dict__
+        "env_file": ".env"  # Load environment variables from .env file
+    }
 
 settings = Configs()
