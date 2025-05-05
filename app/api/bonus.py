@@ -26,7 +26,6 @@ def list_all_bonuses(status: Optional[str] = Query(None), db: Session = Depends(
 def mark_bonus_paid(bonus_id: UUID, db: Session = Depends(get_db)):
     return mark_bonus_as_paid(db, bonus_id)
 
-@router.get("/mark-paid/all", response_model=List[BonusResponse])
+@router.get("/mark-paid/all")
 def mark_all_bonuses_paid(db: Session = Depends(get_db)):
-    mark_all_bonuses_as_paid(db)
-    return {"detail": "All unpaid bonuses marked as paid"}
+    return mark_all_bonuses_as_paid(db)

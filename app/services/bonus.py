@@ -80,7 +80,9 @@ def mark_bonus_as_paid(db: Session, bonus_id: UUID):
 
 def mark_all_bonuses_as_paid(db: Session):
     bonuses = db.query(MLMUserBonus).filter(MLMUserBonus.status == "pending").all()
+    if len(bonuses) == 0:
+        return {"detail": "No unpaid bonuses found"}
     for bonus in bonuses:
         bonus.status = "paid"
     db.commit()
-    return {"detail": "All unpaid bonuses marked as paid"}
+    return {"detail": "All bonuses have been paid."}
